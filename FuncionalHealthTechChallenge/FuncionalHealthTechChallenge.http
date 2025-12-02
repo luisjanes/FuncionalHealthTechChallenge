@@ -1,0 +1,6 @@
+@FuncionalHealthTechChallenge_HostAddress = http://localhost:5261
+
+GET {{FuncionalHealthTechChallenge_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
