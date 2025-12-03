@@ -4,7 +4,10 @@ namespace FuncionalHealthTechChallenge.Ropository.Interfaces
 {
     public interface IAccontRepository
     {
-        public double Withdraw(int Id);
+        public double Balance(int Id);
+
+        public Account Withdraw(Account account);
+        public Account Deposit(Account account);
 
     }
 }

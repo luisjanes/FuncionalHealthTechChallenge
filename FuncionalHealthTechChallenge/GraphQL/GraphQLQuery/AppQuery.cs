@@ -18,7 +18,7 @@ namespace FuncionalHealthTechChallenge.GraphQL.GraphQLQuery
             .Resolve(context =>
             {
                 var contaId = context.GetArgument<int>("conta");
-                return accontRepository.Withdraw(contaId);
+                return accontRepository.Balance(contaId);
             });
         }
     }

@@ -17,7 +17,9 @@ builder.Services.AddDbContext<FuncionalHealthDataContext>(options => options.Use
 builder.Services.AddScoped<IAccontRepository, AccountRepository>();
 builder.Services.AddScoped<AppQuery>();
 builder.Services.AddScoped<AppScheme>();
+builder.Services.AddScoped<AppMutation>();
 builder.Services.AddScoped<AccountType>();
+builder.Services.AddScoped<AccountOutputType>();
 builder.Services.AddGraphQL(b =>
 {
     b.AddSchema<AppScheme>(GraphQL.DI.ServiceLifetime.Scoped);
