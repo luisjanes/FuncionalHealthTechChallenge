@@ -37,6 +37,10 @@ namespace FuncionalHealthTechChallengeTest
 
         public Account Deposit(Account account)
         {
+            if (account.Balance <= 0)
+            {
+                throw new ExecutionError("Valor precisa ser maior que zero");
+            }
             var accountData = accounts.Where(a => a.Id == account.Id).FirstOrDefault();
             if (accountData != null)
             {
@@ -53,6 +57,10 @@ namespace FuncionalHealthTechChallengeTest
 
         public Account Withdraw(Account account)
         {
+            if (account.Balance <= 0)
+            {
+                throw new ExecutionError("Valor precisa ser maior que zero");
+            }
             var accountData = accounts.Where(a => a.Id == account.Id).FirstOrDefault();
 
             if (accountData != null)

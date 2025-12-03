@@ -22,46 +22,60 @@ namespace FuncionalHealthTechChallengeTest
 
         }
         [TestMethod]
-        public void TestBalance()
+        public void Balance_whenSendAccount_thenReturnBalance()
         {
-            for (int i = 1; i <= 4; i++)
-            {
-                int conta = i;
-                var balance = _accontRepository.Balance(conta);
-                Assert.IsTrue(balance >= 0);
-            }
+            int conta = 2;
+            var balance = _accontRepository.Balance(conta);
+            Assert.IsTrue(balance >= 0);
         }
         [TestMethod]
-        public void TestDeposit()
+        public void Balance_whenSendInexistentAccount_thenThrowsExecutionError()
         {
-            for (int i = 1; i <= 4; i++) {
-                int conta = i;
-                double depositAmount = 100.00;
-                var account = new Account { Id = conta,Balance = depositAmount };
-                var balance = _accontRepository.Balance(conta);
-                var newAccount = _accontRepository.Deposit(account);
-                Assert.IsTrue(balance+depositAmount == newAccount.Balance);
-            }
+            int conta = 5;
+            Assert.ThrowsException<GraphQL.ExecutionError>(() => _accontRepository.Balance(conta));
         }
         [TestMethod]
-        public void TestWithdraw()
+        public void Deposit_whenDepositAnyValue_thenReturnNewBalance()
         {
-            for (int i = 1; i <= 4; i++)
-            {
-                int conta = i;
-                double withdrawAmount = 100.00;
-                var account = new Account { Id = conta, Balance = withdrawAmount };
-                var balance = _accontRepository.Balance(conta);
-                if(balance < withdrawAmount)
-                {
-                    Assert.ThrowsException<GraphQL.ExecutionError>(() => _accontRepository.Withdraw(account));
-                }
-                else
-                {
-                    Assert.IsTrue(balance - withdrawAmount == _accontRepository.Withdraw(account).Balance);
-                }
-                
-            }
+            int conta = 4;
+            double depositAmount = 100.00;
+            var account = new Account { Id = conta,Balance = depositAmount };
+            var balance = _accontRepository.Balance(conta);
+            var newAccount = _accontRepository.Deposit(account);
+            Assert.IsTrue(balance+depositAmount == newAccount.Balance);
+        }
+        [TestMethod]
+        public void Deposit_whenNegativeValue_thenThrowsExecutionError()
+        {
+            int conta = 4;
+            double depositAmount = -100.00;
+            var account = new Account { Id = conta, Balance = depositAmount };
+            Assert.ThrowsException<GraphQL.ExecutionError>(() => _accontRepository.Deposit(account));
+        }
+        [TestMethod]
+        public void Withdraw_whenWithdrawJustTheBalance_thenReturnNewBalance()
+        {
+            int conta = 1;
+            double withdrawAmount = 100.00;
+            var account = new Account { Id = conta, Balance = withdrawAmount };
+            var balance = _accontRepository.Balance(conta);
+            Assert.IsTrue(balance - withdrawAmount == _accontRepository.Withdraw(account).Balance);
+        }
+        [TestMethod]
+        public void Withdraw_whenWithdrawMoreThanBalance_thenThrowsExecutionError()
+        {
+            int conta = 3;
+            double withdrawAmount = 100.00;
+            var account = new Account { Id = conta, Balance = withdrawAmount };
+            Assert.ThrowsException<GraphQL.ExecutionError>(() => _accontRepository.Withdraw(account));
+        }
+        [TestMethod]
+        public void Withdraw_whenWithdrawNegativeBalance_thenThrowsExecutionError()
+        {
+            int conta = 3;
+            double withdrawAmount = -100.00;
+            var account = new Account { Id = conta, Balance = withdrawAmount };
+            Assert.ThrowsException<GraphQL.ExecutionError>(() => _accontRepository.Withdraw(account));
         }
     }
 }

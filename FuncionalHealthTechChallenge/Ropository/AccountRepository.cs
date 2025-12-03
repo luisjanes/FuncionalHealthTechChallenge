@@ -26,6 +26,10 @@ namespace FuncionalHealthTechChallenge.Ropository
 
         public Account Deposit(Account account)
         {
+            if (account.Balance <= 0)
+            {
+                throw new ExecutionError("Valor precisa ser maior que zero");
+            }
             var accountData = _context.Accounts.Where(a => a.Id == account.Id).FirstOrDefault();
             if (accountData != null)
             {
