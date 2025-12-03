@@ -94,5 +94,13 @@ namespace FuncionalHealthTechChallengeTest
             var account = new Account { Id = conta, Balance = withdrawAmount };
             Assert.ThrowsException<GraphQL.ExecutionError>(() => _accontRepository.Withdraw(account));
         }
+        [TestMethod]
+        public void Create_whenCreateNewAccount_thenReturnAccount()
+        {
+            int conta = 5;
+            decimal amount = 100.00M;
+            var newAccount = _accontRepository.Create(amount);
+            Assert.IsNotNull(newAccount);
+        }
     }
 }

@@ -69,7 +69,7 @@ namespace FuncionalHealthTechChallengeTest
                 if (leftBalance >= 0)
                 {
                     accountData.Balance = leftBalance;
-                    accounts[accounts.FindIndex(a => a.Id == account.Id)].Balance=accountData.Balance;
+                    accounts[accounts.FindIndex(a => a.Id == account.Id)].Balance = accountData.Balance;
                     return accountData;
                 }
                 throw new ExecutionError("Saldo insuficiente");
@@ -78,6 +78,20 @@ namespace FuncionalHealthTechChallengeTest
             {
                 throw new ExecutionError("Conta não existe");
             }
+        }
+
+        public Account Create(decimal amount)
+        {
+            if (amount < 0)
+            {
+                throw new ExecutionError("Valor precisa ser maior que zero");
+            }
+            var newAccount = new Account { Balance = amount };
+
+            accounts.Add(newAccount);
+            var accountNew = new Account { Id = accounts.Last().Id, Balance = amount };
+
+            return accountNew;
         }
     }
 }

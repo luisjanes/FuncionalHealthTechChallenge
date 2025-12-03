@@ -47,6 +47,22 @@ namespace FuncionalHealthTechChallenge.GraphQL.GraphQLQuery
                     saldo = accountBalance.Balance
                 };
             });
+
+            Field<AccountOutputType>("criarConta")
+            .Arguments(new QueryArguments(
+                new QueryArgument<NonNullGraphType<DecimalGraphType>> { Name = "valor" }
+            ))
+            .Resolve(context =>
+            {
+                var valor = context.GetArgument<decimal>("valor");
+
+                var newAccount = accontRepository.Create(valor);
+                return new
+                {
+                    conta = newAccount.Id,
+                    saldo = newAccount.Balance
+                };
+            });
         }
     }
 }

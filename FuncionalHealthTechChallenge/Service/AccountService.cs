@@ -70,5 +70,19 @@ namespace FuncionalHealthTechChallenge.Ropository
                 throw new ExecutionError("Conta não existe");
             }
         }
+        public Account Create(decimal amount)
+        {
+            if (amount < 0)
+            {
+                throw new ExecutionError("Valor precisa ser maior que zero");
+            }
+            var newAccount = new Account { Balance = amount };
+
+            _context.Accounts.Add(newAccount);
+            _context.SaveChanges();
+            var accountNew = new Account { Id=newAccount.Id,Balance = amount };
+
+            return accountNew;
+        }
     }
 }
