@@ -6,6 +6,7 @@ using FuncionalHealthTechChallenge.Ropository;
 using FuncionalHealthTechChallenge.Ropository.Interfaces;
 using GraphQL;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,7 @@ builder.Services.AddGraphQL(b =>
     b.AddSchema<AppScheme>(GraphQL.DI.ServiceLifetime.Scoped);
     b.AddSystemTextJson();
 });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,7 +34,11 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<FuncionalHealthDataContext>();
+    db.Database.Migrate();
+}
 app.MapControllers();
 app.UseGraphQL<AppScheme>();
 app.UseGraphQLPlayground();
