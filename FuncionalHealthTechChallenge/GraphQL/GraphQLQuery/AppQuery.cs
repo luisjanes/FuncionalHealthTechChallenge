@@ -8,7 +8,7 @@ namespace FuncionalHealthTechChallenge.GraphQL.GraphQLQuery
 {
     public class AppQuery : ObjectGraphType
     {
-        public AppQuery(IAccontRepository accontRepository)
+        public AppQuery(IAccontService accontRepository)
         {
             //Field<AccountType>("saldo").Resolve(context => accontRepository.Withdraw(1));
             Field<FloatGraphType>("saldo")

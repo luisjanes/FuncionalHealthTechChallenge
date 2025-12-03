@@ -15,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<FuncionalHealthDataContext>(options => options.UseSqlServer(connectionString));
-builder.Services.AddScoped<IAccontRepository, AccountRepository>();
+builder.Services.AddScoped<IAccontService, AccountService>();
 builder.Services.AddScoped<AppQuery>();
 builder.Services.AddScoped<AppScheme>();
 builder.Services.AddScoped<AppMutation>();

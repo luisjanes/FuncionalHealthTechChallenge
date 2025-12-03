@@ -5,14 +5,14 @@ using GraphQL;
 
 namespace FuncionalHealthTechChallenge.Ropository
 {
-    public class AccountRepository : IAccontRepository
+    public class AccountService : IAccontService
     {
         private readonly FuncionalHealthDataContext _context;
-        public AccountRepository(FuncionalHealthDataContext funcionalHealthDataContext)
+        public AccountService(FuncionalHealthDataContext funcionalHealthDataContext)
         {
             _context = funcionalHealthDataContext;
         }
-        public double Balance(int Id)
+        public decimal Balance(int Id)
         {
             var balance = _context.Accounts
              .Where(a => a.Id == Id)

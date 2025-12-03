@@ -8,16 +8,17 @@ namespace FuncionalHealthTechChallengeTest
     [TestClass]
     public class AccountTest
     {
-        private readonly IAccontRepository _accontRepository;
-        public AccountTest()
+        private IAccontService _accontRepository;
+        [TestInitialize]
+        public void AccountSetup()
         {
-            _accontRepository = new AccountRepositoryTest();
+            _accontRepository = new AccountServiceTest();
         }
         [TestMethod]
         public void TestAccount()
         {
             int conta = 3;
-            double balance = 0;
+            decimal balance = 0;
             var account = new Account { Id = conta, Balance = balance };
 
         }
@@ -38,7 +39,7 @@ namespace FuncionalHealthTechChallengeTest
         public void Deposit_whenDepositAnyValue_thenReturnNewBalance()
         {
             int conta = 4;
-            double depositAmount = 100.00;
+            decimal depositAmount = 100.00M;
             var account = new Account { Id = conta,Balance = depositAmount };
             var balance = _accontRepository.Balance(conta);
             var newAccount = _accontRepository.Deposit(account);
@@ -48,7 +49,7 @@ namespace FuncionalHealthTechChallengeTest
         public void Deposit_whenNegativeValue_thenThrowsExecutionError()
         {
             int conta = 4;
-            double depositAmount = -100.00;
+            decimal depositAmount = -100.00M;
             var account = new Account { Id = conta, Balance = depositAmount };
             Assert.ThrowsException<GraphQL.ExecutionError>(() => _accontRepository.Deposit(account));
         }
@@ -56,7 +57,7 @@ namespace FuncionalHealthTechChallengeTest
         public void Deposit_whenInexistentAccount_thenThrowsExecutionError()
         {
             int conta = 40;
-            double depositAmount = 100.00;
+            decimal depositAmount = 100.00M;
             var account = new Account { Id = conta, Balance = depositAmount };
             Assert.ThrowsException<GraphQL.ExecutionError>(() => _accontRepository.Deposit(account));
         }
@@ -64,7 +65,7 @@ namespace FuncionalHealthTechChallengeTest
         public void Withdraw_whenWithdrawJustTheBalance_thenReturnNewBalance()
         {
             int conta = 1;
-            double withdrawAmount = 100.00;
+            decimal withdrawAmount = 100.00M;
             var account = new Account { Id = conta, Balance = withdrawAmount };
             var balance = _accontRepository.Balance(conta);
             Assert.IsTrue(balance - withdrawAmount == _accontRepository.Withdraw(account).Balance);
@@ -73,7 +74,7 @@ namespace FuncionalHealthTechChallengeTest
         public void Withdraw_whenWithdrawInexistentAccount_thenThrowsExecutionError()
         {
             int conta = 10;
-            double withdrawAmount = 100.00;
+            decimal withdrawAmount = 100.00M;
             var account = new Account { Id = conta, Balance = withdrawAmount };
             Assert.ThrowsException<GraphQL.ExecutionError>(() => _accontRepository.Withdraw(account));
         }
@@ -81,7 +82,7 @@ namespace FuncionalHealthTechChallengeTest
         public void Withdraw_whenWithdrawMoreThanBalance_thenThrowsExecutionError()
         {
             int conta = 3;
-            double withdrawAmount = 100.00;
+            decimal withdrawAmount = 100.00M;
             var account = new Account { Id = conta, Balance = withdrawAmount };
             Assert.ThrowsException<GraphQL.ExecutionError>(() => _accontRepository.Withdraw(account));
         }
@@ -89,7 +90,7 @@ namespace FuncionalHealthTechChallengeTest
         public void Withdraw_whenWithdrawNegativeBalance_thenThrowsExecutionError()
         {
             int conta = 3;
-            double withdrawAmount = -100.00;
+            decimal withdrawAmount = -100.00M;
             var account = new Account { Id = conta, Balance = withdrawAmount };
             Assert.ThrowsException<GraphQL.ExecutionError>(() => _accontRepository.Withdraw(account));
         }

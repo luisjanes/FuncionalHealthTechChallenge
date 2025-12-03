@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace FuncionalHealthTechChallengeTest
 {
-    internal class AccountRepositoryTest : IAccontRepository
+    internal class AccountServiceTest : IAccontService
     {
         private readonly List<Account> accounts;
-        public AccountRepositoryTest()
+        public AccountServiceTest()
         {
             accounts = new List<Account>()
             {
-                new(){Id = 1, Balance = 100.00},
-                new(){Id = 2, Balance = 1000.00},
-                new(){Id = 3, Balance = 0.00},
-                new(){Id = 4, Balance = 1.00}
+                new(){Id = 1, Balance = 100.00M},
+                new(){Id = 2, Balance = 1000.00M},
+                new(){Id = 3, Balance = 0.00M},
+                new(){Id = 4, Balance = 1.00M}
             };
             
         }
-        public double Balance(int Id)
+        public decimal Balance(int Id)
         {
             var balance = accounts
              .Where(a => a.Id == Id)

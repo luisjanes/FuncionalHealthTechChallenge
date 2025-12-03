@@ -2,10 +2,9 @@
 
 namespace FuncionalHealthTechChallenge.Ropository.Interfaces
 {
-    public interface IAccontRepository
+    public interface IAccontService
     {
-        public double Balance(int Id);
-
+        public decimal Balance(int Id);
         public Account Withdraw(Account account);
         public Account Deposit(Account account);
 

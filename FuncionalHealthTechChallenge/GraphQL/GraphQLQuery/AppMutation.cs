@@ -9,17 +9,17 @@ namespace FuncionalHealthTechChallenge.GraphQL.GraphQLQuery
 {
     public class AppMutation : ObjectGraphType
     {
-        public AppMutation(IAccontRepository accontRepository)
+        public AppMutation(IAccontService accontRepository)
         {
             Field<AccountOutputType>("sacar")
             .Arguments(new QueryArguments(
                 new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "conta" },
-                new QueryArgument<NonNullGraphType<FloatGraphType>> { Name = "valor" }
+                new QueryArgument<NonNullGraphType<DecimalGraphType>> { Name = "valor" }
             ))
             .Resolve(context =>
             {
                 var contaId = context.GetArgument<int>("conta");
-                var valor = context.GetArgument<double>("valor");
+                var valor = context.GetArgument<decimal>("valor");
                 var account = new Account { Id = contaId, Balance = valor };
                 var accountBalance = accontRepository.Withdraw(account);
                 return new
@@ -32,12 +32,12 @@ namespace FuncionalHealthTechChallenge.GraphQL.GraphQLQuery
             Field<AccountOutputType>("depositar")
             .Arguments(new QueryArguments(
                 new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "conta" },
-                new QueryArgument<NonNullGraphType<FloatGraphType>> { Name = "valor" }
+                new QueryArgument<NonNullGraphType<DecimalGraphType>> { Name = "valor" }
             ))
             .Resolve(context =>
             {
                 var contaId = context.GetArgument<int>("conta");
-                var valor = context.GetArgument<double>("valor");
+                var valor = context.GetArgument<decimal>("valor");
                 var account = new Account { Id = contaId, Balance = valor };
 
                 var accountBalance = accontRepository.Deposit(account);
