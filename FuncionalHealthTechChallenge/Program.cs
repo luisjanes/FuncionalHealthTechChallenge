@@ -37,6 +37,4 @@ app.MapControllers();
 app.UseGraphQL<AppScheme>();
 app.UseGraphQLPlayground();
 
-app.UseSwagger();
-app.UseSwaggerUI();
 app.Run();

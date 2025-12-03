@@ -48,7 +48,7 @@ namespace FuncionalHealthTechChallenge.Ropository
             if (accountData != null) 
             {
                 var leftBalance = accountData.Balance - account.Balance;
-                if (leftBalance>0)
+                if (leftBalance>=0)
                 {
                     accountData.Balance = leftBalance;
                     _context.Accounts.Update(accountData);
